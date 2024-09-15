@@ -1,0 +1,9 @@
+# level0
+
+We see a check of the first arg of the program that need to be 423
+
+```sh
+./level0 423
+```
+
+Finish
