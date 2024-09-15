@@ -1,0 +1,7 @@
+# level3
+
+- We can exploit the vulnerable printf to write to the global var
+
+- The var is at `0x0804988c`
+
+- We need to write 64 char to pass the check
