@@ -1,0 +1,22 @@
+int p()
+{
+  char input[64];
+  const void *ret;
+  unsigned int retaddr;
+
+  fflush(stdout);
+  gets(input);
+  ret = (const void *)retaddr;
+  if ( (retaddr & 0xB0000000) == 0xB0000000 )
+  {
+    printf("(%p)\n", ret);
+    _exit(1);
+  }
+  puts(input);
+  return strdup(input);
+}
+
+int main(int argc, const char **argv, const char **envp)
+{
+  return p();
+}
