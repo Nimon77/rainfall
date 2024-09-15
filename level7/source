@@ -1,0 +1,27 @@
+int m()
+{
+  int timestamp;
+
+  timestamp = time(0);
+  return printf("%s - %d\n", c, timestamp);
+}
+
+int main(int argc, const char **argv, const char **envp)
+{
+  int file;
+  char *argv2;
+  char *argv1;
+
+  argv1 = malloc(8);
+  *argv1 = 1;
+  argv1[1] = malloc(8);
+  argv2 = malloc(8);
+  *argv2 = 2;
+  argv2[1] = malloc(8);
+  strcpy(argv1[1], argv[1]);
+  strcpy(argv2[1], argv[2]);
+  file = fopen("/home/user/level8/.pass", "r");
+  fgets(&c, 68, file);
+  puts("~~");
+  return 0;
+}
