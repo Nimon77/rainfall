@@ -1,0 +1,22 @@
+int p(int a1)
+{
+  return printf(a1);
+}
+
+int n()
+{
+  int result;
+  char input[520];
+
+  fgets(input, 512, stdin);
+  p(input);
+  result = m;
+  if ( m == 16930116 )
+    return system("/bin/cat /home/user/level5/.pass");
+  return result;
+}
+
+int main(int argc, const char **argv, const char **envp)
+{
+  return n();
+}
