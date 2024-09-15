@@ -1,0 +1,10 @@
+# level6
+
+- here we have an exploit where the argv size is not checked and the return value
+is a fonction pointer
+
+- We can control the fonction pointer at index 72
+
+- We have an unused fonction that cat our .pass file
+
+- We can put the addr of this fonction after index 72 (`0x8048454`)
