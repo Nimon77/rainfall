@@ -1,0 +1,20 @@
+auth = struct{
+    char name[32]
+    int passwd
+}
+
+auth = ptr1
+reset (auth still = ptr1)
+service = ptr1 (same ptr as auth)
+service = ptr2
+service = ptr3 = where should be auth.passwd
+login = check if auth.passwd == service (here true because auth.passwd was overwriten by 3rd malloc)
+
+```
+auth admin
+reset
+service 111
+service 222
+service 333
+login
+```

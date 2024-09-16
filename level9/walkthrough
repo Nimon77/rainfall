@@ -1,0 +1,16 @@
+sizeof(this) = 0x6c = 108
+this+0x6c = this00-4
+
+| this (size 0x6c) | |  this00 (size 0x6c)  |
+| func | buff | id | | func  |  buff   | id |
+|   4  |  100 |  4 |4|   4   |  100    | 4  |
+|      |AAAAAA|AAAA|A|804a078|shellcode|    |
+|      |     0x6c    |                      |
+
+writing "A"*6c at this->buf (this+4)
+writing this00->buff addr to this->func
+writing shellcode to this00->buff
+
+so when this00->func is call it execute shellcode at this->buff
+
+cat /home/user/bonus0/.pass
