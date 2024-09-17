@@ -12,7 +12,7 @@
 
 - shellcode env around 0xbfffff5b
 
-- First we need to fill the 1st read and add a `\n` to prevent a crash
+- First we need to fill the 1st read and add a `\n` to prevent a crash (4096 char)
 
 - Then we know that the buffer overflow is at index 9
 

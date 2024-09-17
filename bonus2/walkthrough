@@ -2,7 +2,7 @@
 
 - The program check the env var `LANG` value and take 2 arg
 
-- We can see when trying LANG=nl and putting 2 long arg that we have a buffer overflow at index
+- We can see when trying LANG=nl and putting 2 long arg that we have a buffer overflow at index 23
 
 - We can try to put a shellcode in env and use the buffer overflow in the 2nd arg to jump to it
 

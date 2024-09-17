@@ -1,40 +1,35 @@
-int N::operator-(int a1, int a2)
+class N {
+  public:
+    int nb;
+    int (N::*func)(N &);
+    char annotation[100];
+
+    N(int val) : nb(val)
+    {
+      this->func = &N::operator+;
+    }
+    int operator+(N &arg)
+    {
+      return this->nb + arg.nb;
+    }
+    int operator-(N &arg)
+    {
+      return this->nb - arg.nb;
+    }
+    void setAnnotation(char *str)
+    {
+      memcpy(this->annotation, str, strlen(str));
+    }
+};
+
+int		main(int ac, char **av)
 {
-  return *(_DWORD *)(a1 + 104) - *(_DWORD *)(a2 + 104);
-}
+	if (ac < 1)
+		_exit(1);
 
-int N::operator+(int a1, int a2)
-{
-  return *(_DWORD *)(a1 + 104) + *(_DWORD *)(a2 + 104);
-}
+	N *N1 = new N(5);
+	N *N2 = new N(6);
 
-int N::setAnnotation(N *this, char *a2)
-{
-  int v2;
-
-  v2 = strlen(a2);
-  return memcpy((char *)this + 4, a2, v2);
-}
-
-void N::N(N *this, int a2)
-{
-  *(_DWORD *)this = off_8048848;
-  *((_DWORD *)this + 26) = a2;
-}
-
-int main(int argc, const char **argv, const char **envp)
-{
-  N *N1;
-  N *N3;
-  N *N2;
-
-  if ( argc <= 1 )
-    _exit(1);
-  N1 = (N *)operator new(108u);
-  N::N(N1, 5);
-  N2 = N1;
-  N3 = (N *)operator new(108u);
-  N::N(N3, 6);
-  N::setAnnotation(N2, (char *)argv[1]);
-  return (**(int (__cdecl ***)(N *, N *))N3)(N3, N2);
+	N1->setAnnotation(av[1]);
+	return (N2->*(N2->func))(*N1);
 }

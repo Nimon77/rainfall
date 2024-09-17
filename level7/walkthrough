@@ -8,8 +8,9 @@
 
 - The `main` func takes 2 arguments and copies them to the `argv1` and `argv2` variables.
 
-- We can exploit a buffer overflow to override the plt of puts with the address of the `m` func
-  with the help of strcpy
+- We can exploit a buffer overflow to override the plt of puts with the address of the `m` func with the help of strcpy
+
+- We gonna override the pointer to `argv2` to point it to the puts plt
 
 - ```gdb
   (gdb) disas main

