@@ -1,0 +1,19 @@
+# bonus3
+
+- We see that we set `buff[atoi(argv[1])] = 0;` then we check if `strcmp(buff, argv[1])`
+
+- What we can try to do is put the 0 at index 0
+
+```sh
+  ./bonus3 0
+```
+
+- But with that argv[1] = "0" so `strcmp(buff, argv[1])` don't pass
+
+- But if we do
+
+```sh
+  ./bonus3 ""
+```
+
+- `argv[1] = ""` and `atoi(argv[1]) = 0` so `buff = ""` and `strcmp(buff, argv[1]) = 0`
