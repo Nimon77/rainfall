@@ -1,0 +1,30 @@
+char p(char *a1, char *a2)
+{
+  char input[4104];
+
+  puts(a2);
+  read(0, input, 4096);
+  *(_BYTE *)strchr(input, '\n') = 0;
+  return strncpy(a1, input, 20);
+}
+
+int pp(const char *a1)
+{
+  char input1[20];
+  char intput2[28];
+
+  p(input1, " - ");
+  p(intput2, " - ");
+  strcpy(a1, input1);
+  *(_WORD *)&a1[strlen(a1)] = ' ';
+  return strcat(a1, intput2);
+}
+
+int main(int argc, const char **argv, const char **envp)
+{
+  char buf[42];
+
+  pp(buf);
+  puts(buf);
+  return 0;
+}

