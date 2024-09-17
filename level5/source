@@ -1,11 +1,11 @@
-int __cdecl o(int a1, const char **a2, const char **a3)
+int o(int a1, const char **a2, const char **a3)
 {
   system("/bin/sh");
   _exit(1);
   return n(a1, a2, a3);
 }
 
-int __cdecl n(int a1, const char **a2, const char **a3)
+int n(int a1, const char **a2, const char **a3)
 {
   char input[520];
 

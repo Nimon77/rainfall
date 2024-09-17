@@ -1,7 +1,13 @@
 # level3
 
-- We can exploit the vulnerable printf to write to the global var
+- We can exploit the vulnerable printf to write to the global var with `%n`
 
 - The var is at `0x0804988c`
 
 - We need to write 64 char to pass the check
+
+- We when testing with multiple `%x` we see that our first char is 4 arg after printf so we need to put `4*%x` for the %n to write at the addr that we put at the start of the string
+
+- ```sh
+  (python /tmp/level3.py;cat) | ./level3
+  ```

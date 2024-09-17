@@ -2,5 +2,14 @@
 
 - Same thing as the previous level
 
-- This time we split the print in 2 because it take to much time to write
-16930116 char at once
+- This time we split the print in 2 because it take to much time to write 16930116 char at once
+
+- So 21820 char the first time to put `0x0005544`
+
+- We have an offest of 30 so we need to substract and write 43966 other char to write `0x10102` at global_var + 2 so only the 4 first byte is writen to the global var
+
+- Now we have the value `0x1025544` = 16930116 in our global var and this pass the check
+
+- ```sh
+  python /tmp/level4.py | ./level4
+  ```

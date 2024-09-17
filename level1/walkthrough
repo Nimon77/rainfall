@@ -1,6 +1,11 @@
 # level1
 
-We have a buffer overflow at index 76
+- We have a buffer overflow at index 76
 
-We see that we have a function called `run` with `system("/bin/sh")`
-unused that we can exploit at `0x08048444`
+- By disassembling with IDA we see that we have a function called `run` with `system("/bin/sh")` unused that we can exploit at `0x08048444`
+
+- We juste have to put this addresse at index 76
+
+- ```sh
+  (python /tmp/level1.py;cat) | ./level1
+  ```
