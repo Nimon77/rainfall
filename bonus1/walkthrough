@@ -1,0 +1,11 @@
+# bonus1
+
+- We can see that we have a check for `argv[1] > 9` but not for `< 0`
+
+- We can try an undeflow attack
+
+- We also see that if we manage to write after the dest[40] buffer we can override the arg1 int
+
+- There is a check for `arg1 = 1464814662` So if we manage to `memcpy` 41 char we can write `1464814662` to arg1
+
+- The calc for undeflow is `(INT_MIN * 2 + index) / 4` so `(-4294967296+41)/4 = -1073741813` (/4 since the arg1 is \*4)
